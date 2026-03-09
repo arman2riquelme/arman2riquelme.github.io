@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mi Portafolio</title>
+  <title>Jorge Riquelme — Data Analyst Portfolio</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', sans-serif; background: #0f0f1a; color: #e0e0e0; }
@@ -30,24 +30,57 @@
       transition: background 0.3s, transform 0.2s;
     }
     .btn:hover { background: #5a62e8; transform: translateY(-2px); }
-    section { padding: 5rem 3rem; max-width: 1000px; margin: 0 auto; }
+    section { padding: 5rem 3rem; max-width: 1100px; margin: 0 auto; }
     section h2 { font-size: 2rem; color: #7c83fd; margin-bottom: 2rem; text-align: center; }
-    .about-text { font-size: 1.05rem; line-height: 1.8; color: #bbb; text-align: center; max-width: 700px; margin: 0 auto; }
+    .about-text { font-size: 1.05rem; line-height: 1.8; color: #bbb; text-align: center; max-width: 750px; margin: 0 auto; }
+    .about-text p + p { margin-top: 1rem; }
     .skills-grid { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
     .skill-tag {
       background: #1e1e3f; border: 1px solid #7c83fd; color: #7c83fd;
       padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.9rem;
     }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    /* Project categories */
+    .project-category { margin-bottom: 3.5rem; }
+    .project-category h3 {
+      font-size: 1.3rem; color: #a0a7ff; margin-bottom: 0.4rem;
+      border-left: 3px solid #7c83fd; padding-left: 0.8rem;
+    }
+    .project-category .category-desc {
+      color: #888; font-size: 0.9rem; margin-bottom: 1.5rem; padding-left: 1.1rem;
+    }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
     .card {
       background: #1a1a2e; border-radius: 12px; padding: 1.5rem;
       border: 1px solid #2a2a4a; transition: transform 0.3s, box-shadow 0.3s;
     }
     .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(124,131,253,0.2); }
-    .card h3 { color: #fff; margin-bottom: 0.5rem; }
-    .card p { color: #999; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; }
+    .card h4 { color: #fff; margin-bottom: 0.5rem; font-size: 1rem; }
+    .card .card-section-label {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+      color: #7c83fd; margin-bottom: 0.6rem; font-weight: 600;
+    }
+    .card p { color: #999; font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.6rem; }
+    .card p strong { color: #ccc; }
     .card a { color: #7c83fd; font-size: 0.85rem; text-decoration: none; font-weight: 600; }
     .card a:hover { text-decoration: underline; }
+    .card .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+    .card .tag {
+      background: #111130; border: 1px solid #3a3a6a; color: #aaa;
+      font-size: 0.75rem; padding: 0.2rem 0.7rem; border-radius: 12px;
+    }
+    /* Project detail card (expanded) */
+    .card-detail { grid-column: 1 / -1; }
+    .card-detail h4 { font-size: 1.1rem; margin-bottom: 0.8rem; }
+    .card-detail .detail-block { margin-bottom: 0.8rem; }
+    .card-detail .detail-block .block-title {
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em;
+      color: #7c83fd; font-weight: 700; margin-bottom: 0.3rem;
+    }
+    .card-detail .detail-block p { color: #aaa; font-size: 0.9rem; line-height: 1.65; margin: 0; }
+    .card-detail .evolution-note {
+      background: #12122a; border: 1px dashed #3a3a6a; border-radius: 8px;
+      padding: 0.8rem 1rem; margin-top: 0.6rem; color: #888; font-size: 0.85rem; line-height: 1.6;
+    }
     .contact-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
     .contact-links a {
       color: #7c83fd; text-decoration: none; font-size: 1rem;
@@ -60,68 +93,154 @@
 </head>
 <body>
   <nav>
-    <div class="logo">Arman</div>
+    <div class="logo">Jorge Riquelme</div>
     <ul>
-      <li><a href="#sobre-mi">Sobre mi</a></li>
-      <li><a href="#habilidades">Habilidades</a></li>
-      <li><a href="#proyectos">Proyectos</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
+
   <div class="hero">
-    <h1>Hola, soy <span>Arman</span> 👋</h1>
-    <p>Desarrollador apasionado por crear experiencias digitales modernas y funcionales.</p>
-    <a href="#proyectos" class="btn">Ver mis proyectos</a>
+    <h1>Hi, I'm <span>Jorge Riquelme</span> 👋</h1>
+    <p>Data Analyst turning complex institutional data into actionable insights.</p>
+    <a href="#projects" class="btn">View my projects</a>
   </div>
-  <section id="sobre-mi">
-    <h2>Sobre mi</h2>
-    <p class="about-text">
-      Soy un desarrollador con experiencia en crear soluciones tecnologicas.
-      Me apasiona aprender nuevas tecnologias y resolver problemas de forma creativa.
-      Actualmente buscando nuevas oportunidades para crecer y colaborar en proyectos desafiantes.
-    </p>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about-text">
+      <p>Data Analyst with hands-on experience turning complex institutional data into actionable insights. My work spans student retention modeling, labour market analysis, and disaggregated risk analysis. All of it built independently, grounded in real problems, and designed with the end user in mind.</p>
+      <p>Currently expanding beyond education and applying the same analytical thinking to healthcare, workforce analytics, and business intelligence.</p>
+    </div>
   </section>
-  <section id="habilidades">
-    <h2>Habilidades</h2>
+
+  <section id="skills">
+    <h2>Skills</h2>
     <div class="skills-grid">
-      <span class="skill-tag">HTML &amp; CSS</span>
-      <span class="skill-tag">JavaScript</span>
       <span class="skill-tag">Python</span>
-      <span class="skill-tag">Git &amp; GitHub</span>
-      <span class="skill-tag">Data Science</span>
       <span class="skill-tag">SQL</span>
+      <span class="skill-tag">Power BI</span>
+      <span class="skill-tag">Tableau</span>
+      <span class="skill-tag">Data Cleaning</span>
+      <span class="skill-tag">Data Validation</span>
+      <span class="skill-tag">Anomaly Detection</span>
+      <span class="skill-tag">Student Retention</span>
+      <span class="skill-tag">Labour Market Analysis</span>
+      <span class="skill-tag">Git &amp; GitHub</span>
     </div>
   </section>
-  <section id="proyectos">
-    <h2>Proyectos</h2>
-    <div class="projects-grid">
-      <div class="card">
-        <h3>Proyecto 1</h3>
-        <p>Descripcion breve de tu primer proyecto. Que problema resuelve y que tecnologias usaste.</p>
-        <a href="#">Ver en GitHub →</a>
-      </div>
-      <div class="card">
-        <h3>Proyecto 2</h3>
-        <p>Descripcion breve de tu segundo proyecto. Que problema resuelve y que tecnologias usaste.</p>
-        <a href="#">Ver en GitHub →</a>
-      </div>
-      <div class="card">
-        <h3>Proyecto 3</h3>
-        <p>Descripcion breve de tu tercer proyecto. Que problema resuelve y que tecnologias usaste.</p>
-        <a href="#">Ver en GitHub →</a>
+
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <!-- Category 1 -->
+    <div class="project-category">
+      <h3>Data Analysis &amp; Auditing</h3>
+      <p class="category-desc">Python — focused on data quality: cleaning, validation, and anomaly detection.</p>
+      <div class="projects-grid">
+        <div class="card">
+          <div class="card-section-label">Coming soon</div>
+          <h4>Data Quality Pipeline</h4>
+          <p>Automated auditing workflow for institutional datasets — detecting duplicates, schema violations, and statistical outliers using Python and pandas.</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">pandas</span>
+            <span class="tag">Data Auditing</span>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Category 2 -->
+    <div class="project-category">
+      <h3>Visualization &amp; Dashboards</h3>
+      <p class="category-desc">Power BI as the primary tool (embed via "Publish to Web"), Tableau Public as secondary, and Python visualizations.</p>
+      <div class="projects-grid">
+
+        <!-- Detailed project card -->
+        <div class="card card-detail">
+          <div class="card-section-label">Power BI · In development</div>
+          <h4>Student Retention Analysis: From Static Tables to Interactive Dashboards</h4>
+
+          <div class="detail-block">
+            <div class="block-title">The Problem</div>
+            <p>Retention reports existed but weren't actionable. Data lived in a 20,000-row spreadsheet with over 30 columns, and visuals were low-resolution screenshots embedded in Word documents. The information was there but reading it required significant effort from the audience.</p>
+          </div>
+
+          <div class="detail-block">
+            <div class="block-title">The Approach</div>
+            <p>Rather than rebuilding from scratch, I first understood the existing calculation logic — how retention rates were computed, how cohorts were tracked, and how institutional retention differed from program-level retention. From there, I redesigned the visualization iteratively, applying churn analysis principles to an academic context.</p>
+          </div>
+
+          <div class="detail-block">
+            <div class="block-title">The Evolution</div>
+            <div class="evolution-note">
+              Figure 1 &amp; 2 show the final tabular format used in institutional reports — structured and readable, but still static. Figure 3 shows the retention chart redesigned using churn analysis principles, where bars represent retention rates by population and the line tracks total student loss per cohort term.
+              <br><br>
+              The final stage, currently in development, moves this into Power BI — enabling dynamic comparison of current performance against historical averages, with filters by student population and campus.
+            </div>
+          </div>
+
+          <div class="detail-block">
+            <div class="block-title">The Result</div>
+            <p>The same underlying data, presented differently, became a tool for decision-making rather than a reporting obligation.</p>
+          </div>
+
+          <div class="tags">
+            <span class="tag">Power BI</span>
+            <span class="tag">Python</span>
+            <span class="tag">Churn Analysis</span>
+            <span class="tag">Student Retention</span>
+            <span class="tag">Data Visualization</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Category 3 -->
+    <div class="project-category">
+      <h3>Education Domain Projects</h3>
+      <p class="category-desc">Independent pilots and proposals — student retention, early alert systems, academic performance, multi-level integration.</p>
+      <div class="projects-grid">
+        <div class="card">
+          <div class="card-section-label">Independent pilot</div>
+          <h4>Early Alert System Prototype</h4>
+          <p>Risk stratification model combining academic performance and engagement signals to flag at-risk students before the withdrawal deadline.</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Risk Modeling</span>
+            <span class="tag">Education</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-section-label">Kaggle — Transferability</div>
+          <h4>Kaggle Projects</h4>
+          <p>Applied education-domain analytical methods to open datasets in healthcare and workforce domains — demonstrating transferability of the same modeling and auditing approach.</p>
+          <div class="tags">
+            <span class="tag">Kaggle</span>
+            <span class="tag">Python</span>
+            <span class="tag">Cross-domain</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
-  <section id="contacto">
-    <h2>Contacto</h2>
+
+  <section id="contact">
+    <h2>Contact</h2>
     <div class="contact-links">
       <a href="https://github.com/arman2riquelme" target="_blank">GitHub</a>
-      <a href="mailto:tu@email.com">Email</a>
+      <a href="mailto:arman2.riquelme@gmail.com">Email</a>
       <a href="https://linkedin.com/in/tu-perfil" target="_blank">LinkedIn</a>
     </div>
   </section>
+
   <footer>
-    <p>© 2026 Arman Riquelme · Hecho con GitHub Pages</p>
+    <p>© 2026 Jorge Riquelme · Built with GitHub Pages</p>
   </footer>
 </body>
 </html>

@@ -71,15 +71,43 @@
     /* Project detail card (expanded) */
     .card-detail { grid-column: 1 / -1; }
     .card-detail h4 { font-size: 1.1rem; margin-bottom: 0.8rem; }
-    .card-detail .detail-block { margin-bottom: 0.8rem; }
-    .card-detail .detail-block .block-title {
+    .detail-block { margin-bottom: 0.8rem; }
+    .detail-block .block-title {
       font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em;
       color: #7c83fd; font-weight: 700; margin-bottom: 0.3rem;
     }
-    .card-detail .detail-block p { color: #aaa; font-size: 0.9rem; line-height: 1.65; margin: 0; }
-    .card-detail .evolution-note {
+    .detail-block p { color: #aaa; font-size: 0.9rem; line-height: 1.65; margin: 0; }
+    .evolution-note {
       background: #12122a; border: 1px dashed #3a3a6a; border-radius: 8px;
       padding: 0.8rem 1rem; margin-top: 0.6rem; color: #888; font-size: 0.85rem; line-height: 1.6;
+    }
+    /* Figure gallery */
+    .figures-row {
+      display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; justify-content: flex-start;
+    }
+    .figure-item {
+      flex: 1 1 280px; max-width: 360px;
+      background: #0f0f1a; border: 1px solid #2a2a4a; border-radius: 8px; overflow: hidden;
+    }
+    .figure-item img {
+      width: 100%; height: auto; display: block;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .figure-item img:hover { opacity: 0.85; }
+    .figure-item .fig-caption {
+      font-size: 0.78rem; color: #666; text-align: center; padding: 0.4rem 0.6rem;
+      border-top: 1px solid #1e1e3f;
+    }
+    /* Lightbox */
+    #lightbox {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      z-index: 9999; justify-content: center; align-items: center;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 6px; box-shadow: 0 0 40px rgba(0,0,0,0.8); }
+    #lightbox-close {
+      position: absolute; top: 1rem; right: 1.5rem;
+      color: #fff; font-size: 2rem; cursor: pointer; line-height: 1;
     }
     .contact-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
     .contact-links a {
@@ -103,7 +131,7 @@
   </nav>
 
   <div class="hero">
-    <h1>Hi, I'm <span>Jorge Riquelme</span> 👋</h1>
+    <h1>Hi, I'm <span>Jorge Riquelme</span> &#x1F44B;</h1>
     <p>Data Analyst turning complex institutional data into actionable insights.</p>
     <a href="#projects" class="btn">View my projects</a>
   </div>
@@ -159,9 +187,8 @@
       <p class="category-desc">Power BI as the primary tool (embed via "Publish to Web"), Tableau Public as secondary, and Python visualizations.</p>
       <div class="projects-grid">
 
-        <!-- Detailed project card -->
         <div class="card card-detail">
-          <div class="card-section-label">Power BI · In development</div>
+          <div class="card-section-label">Power BI &middot; In development</div>
           <h4>Student Retention Analysis: From Static Tables to Interactive Dashboards</h4>
 
           <div class="detail-block">
@@ -180,6 +207,20 @@
               Figure 1 &amp; 2 show the final tabular format used in institutional reports — structured and readable, but still static. Figure 3 shows the retention chart redesigned using churn analysis principles, where bars represent retention rates by population and the line tracks total student loss per cohort term.
               <br><br>
               The final stage, currently in development, moves this into Power BI — enabling dynamic comparison of current performance against historical averages, with filters by student population and campus.
+            </div>
+            <div class="figures-row">
+              <div class="figure-item">
+                <img src="images/Image 001.png" alt="Figure 1 — Institutional retention table" onclick="openLightbox(this.src)" />
+                <div class="fig-caption">Figure 1 — Institutional retention report (static table)</div>
+              </div>
+              <div class="figure-item">
+                <img src="images/Image 002.png" alt="Figure 2 — Program-level retention table" onclick="openLightbox(this.src)" />
+                <div class="fig-caption">Figure 2 — Program-level retention breakdown</div>
+              </div>
+              <div class="figure-item">
+                <img src="images/Image 003.png" alt="Figure 3 — Redesigned churn-style retention chart" onclick="openLightbox(this.src)" />
+                <div class="fig-caption">Figure 3 — Retention redesigned with churn analysis principles</div>
+              </div>
             </div>
           </div>
 
@@ -240,7 +281,26 @@
   </section>
 
   <footer>
-    <p>© 2026 Jorge Riquelme · Built with GitHub Pages</p>
+    <p>&copy; 2026 Jorge Riquelme &middot; Built with GitHub Pages</p>
   </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox">
+    <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Full size figure" />
+  </div>
+
+  <script>
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+  </script>
 </body>
 </html>

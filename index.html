@@ -388,59 +388,65 @@
 
     <!-- PANEL: Education Domain -->
     <div id="panel-education" class="project-panel">
-      <div class="case-card">
-        <div class="case-header" onclick="toggleAccordion(this)">
-          <div class="case-info">
-            <div class="case-tag">Education Domain &middot; Research Pilot</div>
-            <h3 class="case-title">EWS Pilot: Multilevel Contextual EWS &ndash; A Business Intelligence Approach</h3>
-          </div>
-          <div class="case-icon">+</div>
-        </div>
-        <div class="case-body">
-          <div class="case-section">
-            <div class="case-section-title">Definition</div>
-            <p>The proposed Early Warning System (EWS) is a next-generation Academic Analytics framework that shifts the institutional focus from individual student remediation to a relational, multilevel intelligence model. It integrates a robust BI architecture with longitudinal data analysis to identify risk not as an isolated student trait, but as a dynamic interaction between the learner, the curriculum, and the institution.</p>
-          </div>
-          <div class="case-section">
-            <div class="case-section-title">The Problem</div>
-            <p>Within Ontario higher education, institutional data is often trapped in functional silos — preventing a holistic view of the factors driving student attrition. Traditional EWS implementations focus exclusively on the individual student (Micro level), treating academic risk as a learner deficiency while ignoring structural failures within specific subjects or teaching methods.</p>
-            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-            <div class="read-more-content"><p>By focusing only on the Micro level, institutions naturalize systemic problems — failing to recognize when a student's struggle is a symptom of broader issues like critical subjects with high failure rates. They also depend on static entry data (e.g., high school GPA), which research confirms has modest predictive utility that fades quickly after the first semester.</p></div>
-          </div>
-          <div class="case-section">
-            <div class="case-section-title">The Architecture</div>
-            <p>The system uses an ETL process to consolidate data from institutional warehouses into a specialized Educational Data Mart, segmented into multidimensional domains — partial grades, enrollment trends, and teaching competencies — enabling real-time visual analytics.</p>
-            <div class="case-image"><img src="images/EWS_Diagram.png" alt="EWS Data Architecture"/><div class="case-image-caption">Figure 1: EWS Data Architecture &amp; Analytics Layer — from institutional databases through ETL to Risk Index Generation and Early Alert coordination.</div></div>
-          </div>
-          <div class="case-section">
-            <div class="case-section-title">The Three Tiers of Action</div>
-            <p>Following validated international frameworks, the EWS organizes intelligence and intervention into three nested levels — Micro, Meso, and Macro — each addressing a different layer of institutional responsibility.</p>
-            <div class="case-image"><img src="images/Level_of_EWS.png" alt="EWS Levels"/><div class="case-image-caption">Figure 2: EWS Levels of Information — Micro (student risk), Meso (teaching environment), and Macro (institutional outcomes).</div></div>
-            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-            <div class="read-more-content">
-              <p><strong style="color:var(--text);">Tier 1 - Micro:</strong> Monitors the student's academic vital signs in real-time — Trajectory Risk and Contingent Risk. First-semester credits earned serve as the most powerful milestone predictor.</p>
-              <p style="margin-top:0.6rem;"><strong style="color:var(--text);">Tier 2 - Meso:</strong> Identifies critical subjects that block student progression and monitors teaching performance indicators.</p>
-              <p style="margin-top:0.6rem;"><strong style="color:var(--text);">Tier 3 - Macro:</strong> Analyzes retention trends and effective graduation rates compared against external benchmarks such as the OECD average.</p>
-            </div>
-          </div>
-          <div class="case-section">
-            <div class="case-section-title">Analysis Sessions</div>
-            <p>The EWS operates through four structured analysis sessions across the academic year — each with a defined purpose, suggested date, and coordinated actions across academic and support teams.</p>
-            <div class="case-image"><img src="images/Analysis_Sessions.png" alt="EWS Analysis Sessions"/><div class="case-image-caption">Figure 3: EWS Analysis Sessions — Monitoring, Tracking, Results Analysis, and Teaching Performance Review.</div></div>
-          </div>
-          <div class="case-section">
-            <div class="case-section-title">Expected Outcome</div>
-            <p>This framework transforms the EWS into a tool for Educational Justice. Instead of merely identifying students who have already failed, the institution assumes responsibility for optimizing the learning environment — identifying systemic barriers before they lead to student departure.</p>
-          </div>
-          <div class="case-section">
-            <div class="case-section-title">Research Foundation</div>
-            <p>The multilevel nested analytics approach is validated by research from the Politecnico di Milano, acknowledging that a student's probability of dropping out is highly conditional on their specific program. Additional frameworks draw on UCSC-Chile's multilevel model and Purdue University's Course Signals risk predictor research.</p>
-          </div>
-          <p class="case-note">Independently developed proposal based on validated research. Not institutionally adopted — the initiative and design represent original analytical work developed within an institutional reporting role at a post-secondary institution in Canada.</p>
+  <div class="case-card">
+    <div class="case-header" onclick="toggleAccordion(this)">
+      <div class="case-info">
+        <div class="case-tag">Education Domain &middot; Research Pilot</div>
+        <h3 class="case-title">Holistic EWS: A Multilevel Business Intelligence Ecosystem</h3>
+      </div>
+      <div class="case-icon">+</div>
+    </div>
+    <div class="case-body">
+      
+      <div class="case-section">
+        <div class="case-section-title">Definition</div>
+        <p>A holistic Academic Analytics framework designed to bridge persistent data gaps in the postsecondary sector. By integrating a robust BI architecture, the system correlates <strong>historical, real-time, and forecast data</strong> to identify risk as a dynamic interaction between the learner (Micro), the curriculum (Meso), and the institution (Macro).</p>
+      </div>
+
+      <div class="case-section">
+        <div class="case-section-title">The Problem</div>
+        <p>As identified by HEQCO (2022/2025), Ontario's postsecondary sector faces significant barriers due to functional silos and a lack of identity-based data. Traditional practices—often relying on static, disconnected reports—create analytical bias by focusing exclusively on student deficiencies while ignoring systemic bottlenecks.</p>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+        <div class="read-more-content">
+          <p>By operating as "Black Boxes," conventional models fail to recognize when student struggle is a symptom of structural failures, such as high-failure rates in critical subjects. This fragmented approach obscures the diverse challenges faced by underrepresented populations and limits the predictive utility of institutional data.</p>
         </div>
       </div>
+
+      <div class="case-section">
+        <div class="case-section-title">The Architecture</div>
+        <p>The system utilizes an automated ETL pipeline to consolidate fragmented records into a <strong>specialized Multidimensional Data Mart</strong>. This architecture enables data transparency by segmenting information into key domains: Partial Grades, Enrollment Trends, Teaching Competencies, and <strong>Student Demographic Dimensions</strong> (Age, Identity, Residency).</p>
+        <div class="case-image">
+          <img src="images/EWS_Diagram.png" alt="EWS Data Architecture"/>
+          <div class="case-image-caption">Figure 1: EWS Data Architecture — A transparent pipeline from institutional databases to bias-reduced risk modeling and coordinated action.</div>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <div class="case-section-title">A Holistic Data Ecosystem</div>
+        <p>More than a simple warning tool, this ecosystem transforms limited administrative data into a comprehensive analytical engine supporting multiple workstreams:</p>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+        <div class="read-more-content">
+          <p><strong>Student Success:</strong> Predictive risk scoring and intervention tracking.<br>
+          <strong>Enrollment Management:</strong> Real-time monitoring and trend forecasting.<br>
+          <strong>Academic Quality:</strong> Identification of curricular bottlenecks and teaching performance.<br>
+          <strong>Equity & Access:</strong> Identity-based reporting and bias-reduced assessments aligned with provincial standards.</p>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <div class="case-section-title">Expected Outcome</div>
+        <p>This framework enables a transparent, evidence-based approach to institutional intervention. By providing granular, multilevel insights and reducing assessment bias, the system identifies systemic barriers before they lead to student attrition, optimizing the learning environment and improving graduation rates through objective decision-making.</p>
+      </div>
+
+      <div class="case-section">
+        <div class="case-section-title">Research Foundation</div>
+        <p>The multilevel nested analytics approach is validated by research from <strong>Politecnico di Milano</strong>, acknowledging that dropout probability is highly conditional on program-specific variables. Additional frameworks draw on <strong>UCSC-Chile's</strong> multilevel model and <strong>Purdue University's</strong> Course Signals risk predictor research.</p>
+      </div>
+
+      <p class="case-note">Independently developed proposal based on validated research and HEQCO strategic alignments. Not institutionally adopted — the initiative and design represent original analytical work developed within an institutional reporting role in Ontario, Canada.</p>
     </div>
-  </section>
+  </div>
+</div>
 
   <section id="contact" style="border-top:1px solid var(--border);">
     <p class="section-label">Contact</p>

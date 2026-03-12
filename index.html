@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -5,554 +6,86 @@
   <title>Jorge Riquelme — Data Analyst</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
-    /* ── DESIGN TOKENS ── */
-    :root {
-      --bg:        #1A1C1E;
-      --bg-card:   #22252A;
-      --text:      #F2F2F2;
-      --muted:     #9BA4B0;
-      --gold:      #D4AF37;
-      --gold-dim:  rgba(212,175,55,0.15);
-      --gold-soft: rgba(212,175,55,0.3);
-      --border:    rgba(155,164,176,0.1);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NAVBAR ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 4rem;
-      background: rgba(26,28,30,0.8);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--gold);
-      letter-spacing: 0.05em;
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-weight: 400;
-      font-size: 0.875rem;
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--gold); }
-    .nav-links a:hover { color: var(--gold); }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 85vh;
-      display: flex;
-      align-items: center;
-      padding: 0 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #1A1C1E 60%, #1f2226 100%);
-      z-index: 0;
-    }
-
-    #hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(212,175,55,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(212,175,55,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      z-index: 0;
-    }
-
-    .hero-container {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 4rem;
-      width: 100%;
-      align-items: center;
-    }
-
-    .hero-main {
-      max-width: 760px;
-    }
-
-    .hero-greeting {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.1s;
-    }
-
-    .hero-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 800;
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      color: var(--gold);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.25rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.25s;
-    }
-
-    .hero-tagline {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      font-weight: 300;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-      max-width: 560px;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.4s;
-    }
-
-    .hero-tagline span {
-      color: var(--text);
-      font-weight: 400;
-    }
-
-    .btn-outline {
-      display: inline-block;
-      padding: 0.75rem 2rem;
-      border: 1.5px solid var(--gold);
-      color: var(--gold);
-      background: transparent;
-      border-radius: 4px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      font-size: 0.9rem;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      box-shadow: 0 4px 14px 0 var(--gold-dim);
-      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-      cursor: pointer;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.55s;
-    }
-
-    .btn-outline:hover {
-      background: var(--gold);
-      color: var(--bg);
-    }
-
-    /* Columnas de Pilares (Lado derecho) */
-    .hero-pillars {
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-      border-left: 1px solid var(--border);
-      padding-left: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.7s;
-    }
-
-    .pillar-item h3 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 0.5rem;
-    }
-
-    .pillar-item p {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.4;
-      font-weight: 300;
-    }
-
-    /* Ajuste para Móviles */
-    @media (max-width: 768px) {
-      #hero {
-        padding-top: 8rem;
-        padding-bottom: 4rem;
-        height: auto;
-      }
-      .hero-container {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-      .hero-pillars {
-        border-left: none;
-        border-top: 1px solid var(--border);
-        padding-left: 0;
-        padding-top: 2rem;
-      }
-    }
-    /* ── SECTIONS ── */
-    section {
-      padding: 6rem 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: var(--gold);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      color: var(--text);
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-    }
-
-    .section-divider {
-      width: 48px;
-      height: 2px;
-      background: var(--gold);
-      margin-bottom: 2.5rem;
-    }
-
-    /* ── ABOUT ── */
-    #about p {
-      color: var(--muted);
-      font-weight: 300;
-      font-size: 1.05rem;
-      max-width: 780px;
-      margin-bottom: 1.2rem;
-      letter-spacing: 0.3px;
-    }
-
-    #about p strong {
-      color: var(--text);
-      font-weight: 400;
-    }
-
-    /* ── SKILLS ── */
-    #skills {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 1.5rem;
-    }
-
-    .skill-pill {
-      padding: 0.4rem 1rem;
-      border: 1px solid var(--gold-soft);
-      color: var(--muted);
-      border-radius: 4px;
-      font-size: 0.8rem;
-      font-weight: 400;
-      letter-spacing: 0.03em;
-      transition: all 0.2s ease;
-      cursor: default;
-    }
-
-    .skill-pill:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-
-    /* ── PROJECTS ── */
-    #projects {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 6rem 4rem;
-    }
-
-    /* Category cards navigation */
-    .category-nav {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .category-card {
-      padding: 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--gold-soft);
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .category-card::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      height: 2px;
-      width: 0;
-      background: var(--gold);
-      transition: width 0.3s ease;
-    }
-
-    .category-card:hover::before,
-    .category-card.active::before { width: 100%; }
-
-    .category-card:hover,
-    .category-card.active {
-      border-color: var(--gold);
-      box-shadow: 0 4px 24px var(--gold-dim);
-    }
-
-    .category-card.active .cat-title { color: var(--gold); }
-
-    .cat-icon {
-      font-size: 1.4rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .cat-title {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-      transition: color 0.2s;
-    }
-
-    .cat-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 300;
-      line-height: 1.5;
-    }
-
-    /* Project panels */
-    .project-panel { display: none; }
-    .project-panel.active { display: block; }
-
-    /* Case card */
-    .case-card {
-      background: var(--bg-card);
-      border: 1px solid var(--gold-soft);
-      border-radius: 4px;
-      padding: 2rem 2.5rem;
-      margin-bottom: 1.5rem;
-      transition: border-color 0.2s;
-    }
-
-    .case-card:hover { border-color: rgba(212,175,55,0.5); }
-
-    .case-tag {
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: var(--gold);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .case-title {
-      font-weight: 600;
-      font-size: 1.15rem;
-      color: var(--text);
-      margin-bottom: 1.5rem;
-    }
-
-    /* Case sections */
-    .case-section { margin-bottom: 1.5rem; }
-
-    .case-section-title {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      border-left: 2px solid var(--gold);
-      padding-left: 0.6rem;
-    }
-
-    .case-section p {
-      font-size: 0.92rem;
-      color: var(--muted);
-      font-weight: 300;
-      letter-spacing: 0.3px;
-    }
-
-    /* Read more toggle */
-    .read-more-content {
-      display: none;
-      margin-top: 0.75rem;
-    }
-
-    .read-more-content p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      font-weight: 300;
-    }
-
-    .read-more-btn {
-      background: none;
-      border: none;
-      color: var(--gold);
-      font-size: 0.8rem;
-      font-weight: 400;
-      cursor: pointer;
-      padding: 0.4rem 0;
-      margin-top: 0.4rem;
-      letter-spacing: 0.05em;
-      transition: opacity 0.2s;
-    }
-
-    .read-more-btn:hover { opacity: 0.7; }
-
-    /* Image placeholder */
-    .case-image {
-      margin: 1.5rem 0 0.5rem;
-      border: 1px solid var(--gold-soft);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .case-image img {
-      width: 100%;
-      display: block;
-    }
-
-    .case-image-caption {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-style: italic;
-      margin-top: 0.4rem;
-      padding: 0 0.5rem 0.75rem;
-    }
-
-    .case-note {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-style: italic;
-      border-top: 1px solid var(--border);
-      padding-top: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .coming-soon {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.2rem 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 3rem 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      color: var(--gold);
-      font-size: 0.9rem;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .footer-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 400;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--gold); }
-
-    .footer-copy {
-      color: var(--muted);
-      font-size: 0.75rem;
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
-      #hero, section, #projects, #skills, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .category-nav { grid-template-columns: 1fr; }
-      footer { flex-direction: column; align-items: flex-start; }
-    }
+    :root { --bg:#1A1C1E; --bg-card:#22252A; --text:#F2F2F2; --muted:#9BA4B0; --gold:#D4AF37; --gold-dim:rgba(212,175,55,0.15); --gold-soft:rgba(212,175,55,0.3); --border:rgba(155,164,176,0.1); }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;background:rgba(26,28,30,0.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1rem;color:var(--gold);letter-spacing:0.05em;text-decoration:none;}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-weight:400;font-size:0.875rem;letter-spacing:0.03em;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--gold);}
+    #hero{min-height:85vh;display:flex;align-items:center;padding:0 4rem;position:relative;overflow:hidden;}
+    #hero::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#1A1C1E 60%,#1f2226 100%);z-index:0;}
+    #hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(212,175,55,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(212,175,55,0.03) 1px,transparent 1px);background-size:60px 60px;z-index:0;}
+    .hero-container{position:relative;z-index:1;display:grid;grid-template-columns:1.2fr 0.8fr;gap:4rem;width:100%;align-items:center;}
+    .hero-main{max-width:760px;}
+    .hero-greeting{font-size:1rem;font-weight:400;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;opacity:0;animation:fadeUp 0.6s ease forwards 0.1s;}
+    .hero-name{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:clamp(2.8rem,6vw,4.5rem);color:var(--gold);line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.25rem;opacity:0;animation:fadeUp 0.6s ease forwards 0.25s;}
+    .hero-tagline{font-size:clamp(1rem,2vw,1.2rem);font-weight:300;color:var(--muted);letter-spacing:0.5px;max-width:560px;margin-bottom:2.5rem;opacity:0;animation:fadeUp 0.6s ease forwards 0.4s;}
+    .hero-tagline span{color:var(--text);font-weight:400;}
+    .btn-outline{display:inline-block;padding:0.75rem 2rem;border:1.5px solid var(--gold);color:var(--gold);background:transparent;border-radius:4px;font-family:"Inter",sans-serif;font-weight:400;font-size:0.9rem;letter-spacing:0.05em;text-decoration:none;box-shadow:0 4px 14px 0 var(--gold-dim);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);cursor:pointer;opacity:0;animation:fadeUp 0.6s ease forwards 0.55s;}
+    .btn-outline:hover{background:var(--gold);color:var(--bg);}
+    .hero-pillars{display:flex;flex-direction:column;gap:2.5rem;border-left:1px solid var(--border);padding-left:2.5rem;opacity:0;animation:fadeUp 0.6s ease forwards 0.7s;}
+    .pillar-item h3{font-family:"JetBrains Mono",monospace;font-size:0.85rem;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem;}
+    .pillar-item p{font-size:0.9rem;color:var(--muted);line-height:1.4;font-weight:300;}
+    section{padding:6rem 4rem;max-width:1200px;margin:0 auto;}
+    .section-label{font-size:0.75rem;font-weight:400;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.5rem;}
+    .section-title{font-family:"Inter",sans-serif;font-weight:600;font-size:clamp(1.6rem,3vw,2.2rem);color:var(--text);margin-bottom:1.5rem;line-height:1.2;}
+    .section-divider{width:48px;height:2px;background:var(--gold);margin-bottom:2.5rem;}
+    #about p{color:var(--muted);font-weight:300;font-size:1.05rem;max-width:780px;margin-bottom:1.2rem;letter-spacing:0.3px;}
+    #about p strong{color:var(--text);font-weight:400;}
+    #skills{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4rem;max-width:1200px;margin:0 auto;}
+    .skills-grid{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.5rem;}
+    .skill-pill{padding:0.4rem 1rem;border:1px solid var(--gold-soft);color:var(--muted);border-radius:4px;font-size:0.8rem;font-weight:400;letter-spacing:0.03em;transition:all 0.2s ease;cursor:default;}
+    .skill-pill:hover{border-color:var(--gold);color:var(--gold);}
+    #projects{max-width:1200px;margin:0 auto;padding:6rem 4rem;}
+    .category-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:3.5rem;}
+    .category-card{padding:1.5rem;background:var(--bg-card);border:1px solid var(--gold-soft);border-radius:4px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden;}
+    .category-card::before{content:"";position:absolute;bottom:0;left:0;height:2px;width:0;background:var(--gold);transition:width 0.3s ease;}
+    .category-card:hover::before,.category-card.active::before{width:100%;}
+    .category-card:hover,.category-card.active{border-color:var(--gold);box-shadow:0 4px 24px var(--gold-dim);}
+    .category-card.active .cat-title{color:var(--gold);}
+    .cat-icon{font-size:1.4rem;margin-bottom:0.75rem;}
+    .cat-title{font-weight:600;font-size:0.95rem;color:var(--text);margin-bottom:0.4rem;transition:color 0.2s;}
+    .cat-desc{font-size:0.8rem;color:var(--muted);font-weight:300;line-height:1.5;}
+    .project-panel{display:none;}
+    .project-panel.active{display:block;}
+    /* ACCORDION */
+    .case-card{background:var(--bg-card);border:1px solid var(--gold-soft);border-radius:4px;margin-bottom:1.2rem;overflow:hidden;transition:border-color 0.3s,box-shadow 0.3s;}
+    .case-card:hover{border-color:var(--gold);}
+    .case-header{padding:1.5rem 2.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.02);}
+    .case-header:hover{background:rgba(212,175,55,0.05);}
+    .case-info{flex:1;}
+    .case-tag{font-size:0.7rem;font-weight:400;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.3rem;}
+    .case-title{font-weight:600;font-size:1.05rem;color:var(--text);}
+    .case-icon{margin-left:1.5rem;color:var(--gold);font-family:"JetBrains Mono",monospace;font-size:1.4rem;transition:transform 0.3s ease;flex-shrink:0;line-height:1;}
+    .case-body{max-height:0;overflow:hidden;padding:0 2.5rem;opacity:0;transition:max-height 0.5s ease,opacity 0.3s ease,padding 0.3s ease;}
+    .case-card.open{border-color:var(--gold);box-shadow:0 4px 20px var(--gold-dim);}
+    .case-card.open .case-body{max-height:6000px;padding:1.5rem 2.5rem 2.5rem;opacity:1;border-top:1px solid var(--border);}
+    .case-card.open .case-icon{transform:rotate(45deg);}
+    .case-section{margin-top:1.5rem;}
+    .case-section-title{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;border-left:2px solid var(--gold);padding-left:0.6rem;}
+    .case-section p{font-size:0.92rem;color:var(--muted);font-weight:300;letter-spacing:0.3px;}
+    .read-more-content{display:none;margin-top:0.75rem;}
+    .read-more-content p{font-size:0.88rem;color:var(--muted);font-weight:300;}
+    .read-more-btn{background:none;border:none;color:var(--gold);font-size:0.8rem;font-weight:400;cursor:pointer;padding:0.4rem 0;margin-top:0.4rem;letter-spacing:0.05em;transition:opacity 0.2s;}
+    .read-more-btn:hover{opacity:0.7;}
+    .case-image{margin:1.5rem 0 0.5rem;border:1px solid var(--gold-soft);border-radius:4px;overflow:hidden;}
+    .case-image img{width:100%;display:block;}
+    .case-image-caption{font-size:0.75rem;color:var(--muted);font-style:italic;padding:0.4rem 0.5rem 0.75rem;}
+    .case-note{font-size:0.75rem;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:1rem;margin-top:1.5rem;}
+    footer{border-top:1px solid var(--border);padding:3rem 4rem;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .footer-name{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--gold);font-size:0.9rem;}
+    .footer-links{display:flex;gap:2rem;}
+    .footer-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:400;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--gold);}
+    .footer-copy{color:var(--muted);font-size:0.75rem;width:100%;margin-top:0.5rem;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){nav{padding:1rem 1.5rem;}.nav-links{gap:1.2rem;}#hero{padding-top:8rem;padding-bottom:4rem;height:auto;}.hero-container{grid-template-columns:1fr;gap:3rem;}.hero-pillars{border-left:none;border-top:1px solid var(--border);padding-left:0;padding-top:2rem;}#hero,section,#projects,#skills,footer{padding-left:1.5rem;padding-right:1.5rem;}.category-nav{grid-template-columns:1fr;}.case-header{padding:1.2rem 1.5rem;}.case-card.open .case-body{padding:1rem 1.5rem 2rem;}footer{flex-direction:column;align-items:flex-start;}}
   </style>
 </head>
 <body>
-
-  <!-- NAVBAR -->
   <nav>
     <a class="nav-logo" href="#">JR</a>
     <ul class="nav-links">
@@ -563,519 +96,382 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <div class="hero-container">
-      
       <div class="hero-main">
         <p class="hero-greeting">Portfolio</p>
         <h1 class="hero-name">Jorge Riquelme</h1>
-        <p class="hero-tagline">
-          <span>AI-informed Data Analyst</span> turning complex institutional data into actionable insights.
-        </p>
+        <p class="hero-tagline"><span>AI-informed Data Analyst</span> turning complex institutional data into actionable insights.</p>
         <a href="#projects" class="btn-outline">View my projects</a>
       </div>
-
       <div class="hero-pillars">
-        <div class="pillar-item">
-          <h3>Institutional Intelligence</h3>
-          <p>Student retention modeling, labor market analysis, and disaggregated risk management.</p>
-        </div>
-        <div class="pillar-item">
-          <h3>Data Architecture</h3>
-          <p>Designing <strong>Data Marts</strong> and multi-level integrations to eliminate information silos.</p>
-        </div>
-        <div class="pillar-item">
-          <h3>Evidence-Based Research</h3>
-          <p>Analytical frameworks grounded in the study of research from <strong>Purdue</strong>, <strong>Polimi</strong>, and <strong>UCSC-Chile</strong>.</p>
-        </div>
+        <div class="pillar-item"><h3>Institutional Intelligence</h3><p>Student retention modeling, labor market analysis, and disaggregated risk management.</p></div>
+        <div class="pillar-item"><h3>Data Architecture</h3><p>Designing <strong>Data Marts</strong> and multi-level integrations to eliminate information silos.</p></div>
+        <div class="pillar-item"><h3>Evidence-Based Research</h3><p>Analytical frameworks grounded in research from <strong>Purdue</strong>, <strong>Polimi</strong>, and <strong>UCSC-Chile</strong>.</p></div>
       </div>
-
     </div>
   </section>
-  <!-- ABOUT -->
+
   <section id="about">
     <p class="section-label">About</p>
     <h2 class="section-title">Organizational Intelligence<br>Through Rigorous Analysis</h2>
     <div class="section-divider"></div>
-    <p>
-      Data Analyst with hands-on experience turning complex institutional data into actionable insights.
-      My work spans <strong>student retention modeling</strong>, <strong>labour market analysis</strong>, and
-      <strong>disaggregated risk analysis</strong> — grounded in real problems, self-initiated, and designed
-      with the end user in mind.
-    </p>
-    <p>
-      My analytical approach combines data mart architecture to enable BI solutions with validated applied
-      research in analytics to build organizational intelligence, integrating multilevel data sources and
-      risk indicators to reduce information silos, drawing on frameworks developed at institutions such as
-      Politecnico di Milano, UCSC-Chile, and Purdue University.
-    </p>
-    <p>
-      I work as an AI-informed analyst, leveraging AI tools critically while understanding their limitations
-      and bias risks in institutional decision-making.
-    </p>
+    <p>Data Analyst with hands-on experience turning complex institutional data into actionable insights. My work spans <strong>student retention modeling</strong>, <strong>labour market analysis</strong>, and <strong>disaggregated risk analysis</strong> — grounded in real problems, self-initiated, and designed with the end user in mind.</p>
+    <p>My analytical approach combines data mart architecture to enable BI solutions with validated applied research in analytics to build organizational intelligence, integrating multilevel data sources and risk indicators to reduce information silos, drawing on frameworks developed at institutions such as Politecnico di Milano, UCSC-Chile, and Purdue University.</p>
+    <p>I work as an AI-informed analyst, leveraging AI tools critically while understanding their limitations and bias risks in institutional decision-making.</p>
   </section>
 
-  <!-- SKILLS -->
   <div id="skills">
     <p class="section-label">Technical Skills</p>
     <h2 class="section-title">Tools &amp; Methods</h2>
     <div class="section-divider"></div>
     <div class="skills-grid">
-      <span class="skill-pill">Python</span>
-      <span class="skill-pill">SQL</span>
-      <span class="skill-pill">Power BI</span>
-      <span class="skill-pill">Tableau</span>
-      <span class="skill-pill">Data Cleaning</span>
-      <span class="skill-pill">Data Validation</span>
-      <span class="skill-pill">Anomaly Detection</span>
-      <span class="skill-pill">Student Retention</span>
-      <span class="skill-pill">Labour Market Analysis</span>
-      <span class="skill-pill">Cognos</span>
-      <span class="skill-pill">ETL</span>
-      <span class="skill-pill">Disaggregated Analysis</span>
-      <span class="skill-pill">Clustering</span>
-      <span class="skill-pill">Regression Analysis</span>
-      <span class="skill-pill">Git &amp; GitHub</span>
-      <span class="skill-pill">Data Mart Architecture</span>
+      <span class="skill-pill">Python</span><span class="skill-pill">SQL</span><span class="skill-pill">Power BI</span><span class="skill-pill">Tableau</span><span class="skill-pill">Data Cleaning</span><span class="skill-pill">Data Validation</span><span class="skill-pill">Anomaly Detection</span><span class="skill-pill">Student Retention</span><span class="skill-pill">Labour Market Analysis</span><span class="skill-pill">Cognos</span><span class="skill-pill">ETL</span><span class="skill-pill">Disaggregated Analysis</span><span class="skill-pill">Clustering</span><span class="skill-pill">Regression Analysis</span><span class="skill-pill">Git &amp; GitHub</span><span class="skill-pill">Data Mart Architecture</span>
     </div>
   </div>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <p class="section-label">Work</p>
     <h2 class="section-title">Projects</h2>
     <div class="section-divider"></div>
-
-    <!-- Category navigation -->
     <div class="category-nav">
-      <div class="category-card active" onclick="showCategory('analysis')">
-        <div class="cat-icon">⚙</div>
-        <div class="cat-title">Data Analysis &amp; Auditing</div>
-        <div class="cat-desc">Python — data quality, cleaning, validation, and anomaly detection.</div>
-      </div>
-      <div class="category-card" onclick="showCategory('visualization')">
-        <div class="cat-icon">◈</div>
-        <div class="cat-title">Visualization &amp; Dashboards</div>
-        <div class="cat-desc">Power BI, Tableau, and Python — from static reports to interactive dashboards.</div>
-      </div>
-      <div class="category-card" onclick="showCategory('education')">
-        <div class="cat-icon">◻</div>
-        <div class="cat-title">Education Domain</div>
-        <div class="cat-desc">Pilots and proposals — retention, early alert systems, academic performance.</div>
-      </div>
+      <div class="category-card active" onclick="showCategory('analysis',this)"><div class="cat-icon">&#9881;</div><div class="cat-title">Data Analysis &amp; Auditing</div><div class="cat-desc">Python — data quality, cleaning, validation, and anomaly detection.</div></div>
+      <div class="category-card" onclick="showCategory('visualization',this)"><div class="cat-icon">&#9672;</div><div class="cat-title">Visualization &amp; Dashboards</div><div class="cat-desc">Power BI, Tableau, and Python — from static reports to interactive dashboards.</div></div>
+      <div class="category-card" onclick="showCategory('education',this)"><div class="cat-icon">&#9633;</div><div class="cat-title">Education Domain</div><div class="cat-desc">Pilots and proposals — retention, early alert systems, academic performance.</div></div>
     </div>
 
     <!-- PANEL: Data Analysis & Auditing -->
     <div id="panel-analysis" class="project-panel active">
 
-      <!-- Case 2: Disaggregated Failure Rate Analysis -->
       <div class="case-card">
-        <div class="case-tag">Data Analysis &amp; Auditing · Python</div>
-        <h3 class="case-title">Disaggregated Failure Rate Analysis: Beyond Demographics</h3>
-
-        <div class="case-section">
-          <div class="case-section-title">The Problem</div>
-          <p>Class failure rates were tracked institutionally, but reported as aggregate figures — masking the underlying factors driving student underperformance. The question was not just <em>how many</em> students were failing, but <em>which conditions</em> were most strongly associated with failure.</p>
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p>Existing reports did not disaggregate failure rates by demographic, engagement, or support dimensions, making it difficult to design targeted interventions. Funding Code was treated carefully — subcategories were aggregated to avoid overidentification of specific demographic groups while still capturing the financial dimension of student risk.</p>
+        <div class="case-header" onclick="toggleAccordion(this)">
+          <div class="case-info">
+            <div class="case-tag">Data Analysis &amp; Auditing &middot; Python</div>
+            <h3 class="case-title">Disaggregated Failure Rate Analysis: Beyond Demographics</h3>
           </div>
+          <div class="case-icon">+</div>
         </div>
-
-        <div class="case-section">
-          <div class="case-section-title">The Approach</div>
-          <p>Using Python, I cross-referenced Cognos reports to build a multi-dimensional dataset spanning three indicator groups: Demographic Insights, Educational Engagement, and Background and Support. The analysis combined descriptive statistics, clustering, correlation analysis, and linear regression — with a deliberate bias reduction strategy that avoided individual identifiers and program-specific data.</p>
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p>The dataset was built by cross-referencing multiple Cognos reports — not a single extract. Each indicator group required separate data preparation before the dimensions could be combined for analysis. This foundation also serves as the dimensional structure for a future Power BI implementation, where each indicator group becomes a slicer enabling dynamic filtering.</p>
+        <div class="case-body">
+          <div class="case-section">
+            <div class="case-section-title">The Problem</div>
+            <p>Class failure rates were tracked institutionally, but reported as aggregate figures — masking the underlying factors driving student underperformance. The question was not just <em>how many</em> students were failing, but <em>which conditions</em> were most strongly associated with failure.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content"><p>Existing reports did not disaggregate failure rates by demographic, engagement, or support dimensions, making it difficult to design targeted interventions. Funding Code was treated carefully — subcategories were aggregated to avoid overidentification of specific demographic groups while still capturing the financial dimension of student risk.</p></div>
           </div>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">The Visual</div>
-          <p>The chart shows average failed classes per metric across three indicator groups — offering a balanced view among indicators, metrics, and submetrics.</p>
-          <p style="margin-top:0.5rem;font-size:0.85rem;color:var(--gold);"><em>In this recreation using synthetic data, the following patterns can be observed:</em></p>
-          <ul style="margin-top:0.5rem;padding-left:1.2rem;font-size:0.88rem;color:var(--muted);">
-            <li><strong style="color:var(--text);">Trend:</strong> Steady increase from Residency (2.39) to Funding Code (3.37) across all three groups.</li>
-            <li><strong style="color:var(--text);">Demographics:</strong> Age Range (2.52) emerges as the most significant demographic factor.</li>
-            <li><strong style="color:var(--text);">Engagement:</strong> Shaped primarily by Semester (2.74) and Previous Standing (2.89).</li>
-            <li><strong style="color:var(--text);">Background &amp; Support:</strong> Funding Code (3.37) and Catchment Area (2.95) show the highest average failure rates.</li>
-          </ul>
-          <div class="case-image">
-            <img src="images/average_class_failure_rates.png" alt="Average Class Failure Rates per Metric" />
-            <div class="case-image-caption">Figure 1: Average Class Failure Rates per Metric</div>
+          <div class="case-section">
+            <div class="case-section-title">The Approach</div>
+            <p>Using Python, I cross-referenced Cognos reports to build a multi-dimensional dataset spanning three indicator groups: Demographic Insights, Educational Engagement, and Background and Support. The analysis combined descriptive statistics, clustering, correlation analysis, and linear regression — with a deliberate bias reduction strategy that avoided individual identifiers and program-specific data.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content"><p>The dataset was built by cross-referencing multiple Cognos reports — not a single extract. Each indicator group required separate data preparation before the dimensions could be combined for analysis. This foundation also serves as the dimensional structure for a future Power BI implementation, where each indicator group becomes a slicer enabling dynamic filtering.</p></div>
           </div>
+          <div class="case-section">
+            <div class="case-section-title">The Visual</div>
+            <p>The chart shows average failed classes per metric across three indicator groups — offering a balanced view among indicators, metrics, and submetrics.</p>
+            <p style="margin-top:0.5rem;font-size:0.85rem;color:var(--gold);"><em>In this recreation using synthetic data, the following patterns can be observed:</em></p>
+            <ul style="margin-top:0.5rem;padding-left:1.2rem;font-size:0.88rem;color:var(--muted);">
+              <li><strong style="color:var(--text);">Trend:</strong> Steady increase from Residency (2.39) to Funding Code (3.37) across all three groups.</li>
+              <li><strong style="color:var(--text);">Demographics:</strong> Age Range (2.52) emerges as the most significant demographic factor.</li>
+              <li><strong style="color:var(--text);">Engagement:</strong> Shaped primarily by Semester (2.74) and Previous Standing (2.89).</li>
+              <li><strong style="color:var(--text);">Background &amp; Support:</strong> Funding Code (3.37) and Catchment Area (2.95) show the highest average failure rates.</li>
+            </ul>
+            <div class="case-image"><img src="images/average_class_failure_rates.png" alt="Average Class Failure Rates per Metric"/><div class="case-image-caption">Figure 1: Average Class Failure Rates per Metric</div></div>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">The Finding</div>
+            <p>Financial circumstances, represented by Funding Code, emerged as the strongest predictor of class failure — stronger than gender, age, or residency status. This challenges assumptions that demographic identity is the primary risk factor, and points toward financial support systems as a higher-leverage intervention point.</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">Transferability</div>
+            <p>This analytical framework applies directly to healthcare (readmission risk), HR (employee turnover), and credit risk modeling — any domain where disaggregated risk analysis can identify systemic factors behind individual outcomes.</p>
+          </div>
+          <p class="case-note">Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada. Recreated with synthetic data for portfolio purposes.</p>
         </div>
-
-        <div class="case-section">
-          <div class="case-section-title">The Finding</div>
-          <p>Financial circumstances, represented by Funding Code, emerged as the strongest predictor of class failure — stronger than gender, age, or residency status. This challenges assumptions that demographic identity is the primary risk factor, and points toward financial support systems as a higher-leverage intervention point.</p>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">Transferability</div>
-          <p>This analytical framework applies directly to healthcare (readmission risk), HR (employee turnover), and credit risk modeling — any domain where disaggregated risk analysis can identify systemic factors behind individual outcomes.</p>
-        </div>
-
-        <p class="case-note">Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada. Recreated with synthetic data for portfolio purposes.</p>
       </div>
 
-
-      <!-- Case: Retention Dataset Audit & ETL Transformation -->
       <div class="case-card">
-        <div class="case-tag">Data Analysis &amp; Auditing · Python</div>
-        <h3 class="case-title">Retention Dataset Audit &amp; ETL Transformation: From Wide Format to BI-Ready Structure</h3>
-        <div class="case-section">
-          <div class="case-section-title">The Audit</div>
-          <p>Wide-format datasets are the standard output of legacy administrative systems — efficient for storage and transactional reporting, but structurally limited for dynamic BI analysis. This case documents the audit and transformation of a retention dataset typical of Ontario post-secondary institutions: 985 rows and 33 columns, where semester-retention values are embedded directly in column names rather than stored as rows.</p>
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p>The audit process began by mapping the dataset's composition: five descriptive columns (academic year, cohort term, program, campus, ministry codes) followed by 18 retention columns encoding both the semester number (1–6) and student type (Total, Domestic, International) within the column name itself. This wide structure, while readable as a static report, prevents dynamic filtering by semester or student type without creating individual measures for each column.</p>
+        <div class="case-header" onclick="toggleAccordion(this)">
+          <div class="case-info">
+            <div class="case-tag">Data Analysis &amp; Auditing &middot; Python</div>
+            <h3 class="case-title">Retention Dataset Audit &amp; ETL Transformation: From Wide Format to BI-Ready Structure</h3>
           </div>
+          <div class="case-icon">+</div>
         </div>
-        <div class="case-section">
-          <div class="case-section-title">Dataset Structure — Original Format</div>
-          <p>Wide-format structure where each semester and student type occupies a separate column — 18 retention columns embedded in column names, making dynamic slicing in Power BI impractical without individual measures for each:</p>
-          <div style="overflow-x:auto;margin-top:1rem;">
-            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
-              <thead>
-                <tr>
+        <div class="case-body">
+          <div class="case-section">
+            <div class="case-section-title">The Audit</div>
+            <p>Wide-format datasets are the standard output of legacy administrative systems — efficient for storage and transactional reporting, but structurally limited for dynamic BI analysis. This case documents the audit and transformation of a retention dataset typical of Ontario post-secondary institutions: 985 rows and 33 columns, where semester-retention values are embedded directly in column names rather than stored as rows.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content"><p>The audit process began by mapping the dataset composition: five descriptive columns (academic year, cohort term, program, campus, ministry codes) followed by 18 retention columns encoding both the semester number (1-6) and student type within the column name itself. This wide structure, while readable as a static report, prevents dynamic filtering by semester or student type without creating individual measures for each column.</p></div>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">Dataset Structure — Original Format</div>
+            <p>Wide-format structure where each semester and student type occupies a separate column — 18 retention columns embedded in column names, making dynamic slicing in Power BI impractical:</p>
+            <div style="overflow-x:auto;margin-top:1rem;">
+              <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead><tr>
                   <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">academic_year</th>
                   <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">cohort_term</th>
                   <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">program_name</th>
                   <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">campus</th>
                   <th style="text-align:right;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">sem1_retained_total</th>
                   <th style="text-align:right;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">sem1_retained_domestic</th>
-                  <th style="text-align:center;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--muted);font-weight:400;border-bottom:1px solid var(--gold-soft);">…</th>
+                  <th style="text-align:center;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--muted);font-weight:400;border-bottom:1px solid var(--gold-soft);">&#8230;</th>
                   <th style="text-align:right;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">sem6_retained_international</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
+                </tr></thead>
+                <tbody><tr>
                   <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);">2026</td>
                   <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);">202508</td>
                   <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);">[Program]</td>
                   <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);">Campus A</td>
                   <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:right;">26</td>
                   <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:right;">26</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:center;">…</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:center;">&#8230;</td>
                   <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:right;">0</td>
-                </tr>
-              </tbody>
-            </table>
+                </tr></tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.6rem;font-size:0.78rem;color:var(--muted);font-style:italic;">985 rows x 33 columns — 18 of which are semester-retention values embedded in column names (SEM1-SEM6 x Total / DOM / INT)</p>
           </div>
-          <p style="margin-top:0.6rem;font-size:0.78rem;color:var(--muted);font-style:italic;">985 rows × 33 columns — 18 of which are semester-retention values embedded in column names (SEM1–SEM6 × Total / DOM / INT)</p>
-        </div>
-        <div class="case-section">
-          <div class="case-section-title">The Transformation</div>
-          <p>Using Python, the dataset was unpivoted from wide to long format — extracting the semester number from column names into a dedicated field. The result reduces 33 columns to 6, making the data natively compatible with Power BI slicers and DAX measures. Demographic dimensions are added separately via foreign key joins, enabling richer disaggregation without embedding them in the base structure:</p>
-          <div style="overflow-x:auto;margin-top:1rem;">
-            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
-              <thead>
-                <tr>
+          <div class="case-section">
+            <div class="case-section-title">The Transformation</div>
+            <p>Using Python, the dataset was unpivoted from wide to long format — extracting the semester number from column names into a dedicated field. The result reduces 33 columns to 6, making the data natively compatible with Power BI slicers and DAX measures. Demographic dimensions are added separately via foreign key joins:</p>
+            <div style="overflow-x:auto;margin-top:1rem;">
+              <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead><tr>
                   <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">academic_year</th>
                   <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">cohort_term</th>
                   <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">program_name</th>
                   <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">campus</th>
                   <th style="text-align:center;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">semester</th>
                   <th style="text-align:right;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">students</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom:1px solid var(--border);">
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">2026</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">202508</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">[Program]</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">Campus A</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">1</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">26</td>
-                </tr>
-                <tr style="border-bottom:1px solid var(--border);">
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">2026</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">202508</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">[Program]</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">Campus B</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">2</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">0</td>
-                </tr>
-                <tr>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">…</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">…</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">…</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">…</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">…</td>
-                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">…</td>
-                </tr>
-              </tbody>
-            </table>
+                </tr></thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.5rem 0.8rem;color:var(--muted);">2026</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">202508</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">[Program]</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">Campus A</td><td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">1</td><td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">26</td></tr>
+                  <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.5rem 0.8rem;color:var(--muted);">2026</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">202508</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">[Program]</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">Campus B</td><td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">2</td><td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">0</td></tr>
+                  <tr><td style="padding:0.5rem 0.8rem;color:var(--muted);">&#8230;</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">&#8230;</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">&#8230;</td><td style="padding:0.5rem 0.8rem;color:var(--muted);">&#8230;</td><td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">&#8230;</td><td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">&#8230;</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.6rem;font-size:0.78rem;color:var(--muted);font-style:italic;">Long format — one row per program, campus, and semester. What previously required 18 static measures becomes a single Students field.</p>
           </div>
-          <p style="margin-top:0.6rem;font-size:0.78rem;color:var(--muted);font-style:italic;">Long format — one row per program, campus, and semester. What previously required 18 static measures becomes a single Students field.</p>
+          <div class="case-section">
+            <div class="case-section-title">Second Transformation — Adding Dimensions</div>
+            <p>A foreign key was constructed to enable joins with dimension tables — adding demographic, program, and enrollment context without embedding it in the base retention structure. This separation of concerns keeps the retention layer clean and scalable as additional data sources are connected.</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">A Note on Cohort Tracking</div>
+            <p>Institutional enrollment data is typically aggregated at the program-cohort level, not at the individual student level. To support cohort tracking across semesters, the dataset was restructured using enrollment data as the foundation — making it possible to distinguish organic retention from other enrollment movements that aggregate reporting does not capture by default. Cohort-level program tracking is developed further in Case 2.</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">The Result</div>
+            <p>A long-format structure ready to calculate institutional and program-level retention rates dynamically — with a foundation that scales to include additional dimensions as data sources are connected via foreign keys. What previously required 18 static measures becomes a single analytical layer adaptable to any reporting need.</p>
+          </div>
+          <p class="case-note">Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada. Dataset structure illustrated with synthetic data for portfolio purposes.</p>
         </div>
-        <div class="case-section">
-          <div class="case-section-title">Second Transformation — Adding Dimensions</div>
-          <p>A foreign key was constructed to enable joins with dimension tables — adding demographic, program, and enrollment context without embedding it in the base retention structure. This separation of concerns keeps the retention layer clean and scalable as additional data sources are connected.</p>
-        </div>
-        <div class="case-section">
-          <div class="case-section-title">A Note on Cohort Tracking</div>
-          <p>Institutional enrollment data is typically aggregated at the program-cohort level, not at the individual student level. To support cohort tracking across semesters, the dataset was restructured using enrollment data as the foundation — making it possible to distinguish organic retention from other enrollment movements that aggregate reporting does not capture by default. Cohort-level program tracking is developed further in Case 2.</p>
-        </div>
-        <div class="case-section">
-          <div class="case-section-title">The Result</div>
-          <p>A long-format structure ready to calculate institutional and program-level retention rates dynamically — with a foundation that scales to include additional dimensions as data sources are connected via foreign keys. What previously required 18 static measures becomes a single analytical layer adaptable to any reporting need.</p>
-        </div>
-        <p class="case-note">Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada. Dataset structure illustrated with synthetic data for portfolio purposes.</p>
       </div>
-
     </div>
 
     <!-- PANEL: Visualization & Dashboards -->
     <div id="panel-visualization" class="project-panel">
 
-      <!-- Case 1: Student Retention -->
       <div class="case-card">
-        <div class="case-tag">Visualization &amp; Dashboards · Power BI</div>
-        <h3 class="case-title">Student Retention Analysis: From Static Reports to Interactive Dashboards</h3>
-
-        <div class="case-section">
-          <div class="case-section-title">The Problem</div>
-          <p>Retention reports existed but were not fully actionable — visuals were static screenshots embedded in Word documents, making year-over-year comparison difficult and limiting accessibility for non-technical stakeholders. The underlying dataset added complexity: over 20,000 rows, nearly 50 columns, and unidentified transfer students that distorted program-level metrics.</p>
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p>The source dataset combined dimensions and calculated fields with coding conventions that evolved over time. Records could not be reliably linked back to the original cohort, and transfer students were not separately identified — making it impossible to distinguish institutional retention from program-level retention without first resolving these structural issues.</p>
+        <div class="case-header" onclick="toggleAccordion(this)">
+          <div class="case-info">
+            <div class="case-tag">Visualization &amp; Dashboards &middot; Power BI</div>
+            <h3 class="case-title">Student Retention Analysis: From Static Reports to Interactive Dashboards</h3>
           </div>
+          <div class="case-icon">+</div>
         </div>
-
-        <div class="case-section">
-          <div class="case-section-title">The Approach</div>
-          <p>Rather than rebuilding from scratch, I first understood the existing calculation logic — how retention rates were computed, how cohorts were tracked, and critically, how institutional retention differed from program-level retention. From there, I redesigned the visualization applying churn analysis principles: the student as the equivalent of a customer, semester-to-semester retention as the equivalent of churn.</p>
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p>Transfer students needed to be identified and separated from the original cohort to produce meaningful program-level metrics. The redesign was iterative — each version tested against the question: can a non-technical stakeholder act on this?</p>
+        <div class="case-body">
+          <div class="case-section">
+            <div class="case-section-title">The Problem</div>
+            <p>Retention reports existed but were not fully actionable — visuals were static screenshots embedded in Word documents, making year-over-year comparison difficult and limiting accessibility for non-technical stakeholders. The underlying dataset added complexity: over 20,000 rows, nearly 50 columns, and unidentified transfer students that distorted program-level metrics.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content"><p>The source dataset combined dimensions and calculated fields with coding conventions that evolved over time. Records could not be reliably linked back to the original cohort, and transfer students were not separately identified — making it impossible to distinguish institutional retention from program-level retention without first resolving these structural issues.</p></div>
           </div>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">My Redesign — Program Retention Table</div>
-          <p>An improved tabular view tracking cohort progression across semesters (Semester 1 through Semester 5) on the horizontal axis, with retention percentages on the vertical dimension, segmented by domestic (RES) and international (NRES) students. The staircase effect makes attrition patterns immediately readable — newer cohorts have fewer semesters of data, older cohorts show the full trajectory.</p>
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p>This format represented a significant improvement in accessibility over previous reports, though it remained static. It served as the analytical foundation for the subsequent Power BI implementation, which introduced dynamic filtering and historical benchmarking.</p>
+          <div class="case-section">
+            <div class="case-section-title">The Approach</div>
+            <p>Rather than rebuilding from scratch, I first understood the existing calculation logic — how retention rates were computed, how cohorts were tracked, and critically, how institutional retention differed from program-level retention. From there, I redesigned the visualization applying churn analysis principles: the student as the equivalent of a customer, semester-to-semester retention as the equivalent of churn.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content"><p>Transfer students needed to be identified and separated from the original cohort to produce meaningful program-level metrics. The redesign was iterative — each version tested against the question: can a non-technical stakeholder act on this?</p></div>
           </div>
-          <div class="case-image" style="margin-top:1.2rem;">
-            <img src="images/2026-03-10 14_55_37-Mock Data_Retention - Excel.png" alt="Cohort Progression Table" />
-            <div class="case-image-caption">Figure 1: Cohort Progression Across Semesters — Program-Level Retention Rate. Visual redesigned with churn analysis principles.</div>
+          <div class="case-section">
+            <div class="case-section-title">My Redesign — Program Retention Table</div>
+            <p>An improved tabular view tracking cohort progression across semesters (Semester 1 through Semester 5) on the horizontal axis, with retention percentages on the vertical dimension, segmented by domestic (RES) and international (NRES) students. The staircase effect makes attrition patterns immediately readable.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content"><p>This format represented a significant improvement in accessibility over previous reports, though it remained static. It served as the analytical foundation for the subsequent Power BI implementation, which introduced dynamic filtering and historical benchmarking.</p></div>
+            <div class="case-image" style="margin-top:1.2rem;"><img src="images/2026-03-10 14_55_37-Mock Data_Retention - Excel.png" alt="Cohort Progression Table"/><div class="case-image-caption">Figure 1: Cohort Progression Across Semesters — Program-Level Retention Rate. Visual redesigned with churn analysis principles.</div></div>
           </div>
+          <div class="case-section">
+            <div class="case-section-title">The Result</div>
+            <p>The same underlying data, presented with the right structure, became a tool for decision-making rather than a reporting obligation. The vertical axis represents time — each row is a cohort intake. The horizontal axis tracks semester progression. The staircase effect is intentional: newer cohorts have fewer semesters of data, while older cohorts show the full retention trajectory. Stakeholders could identify programs with declining retention, compare cohorts, and segment by domestic and international students — without requiring analytical expertise.</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">Next Step</div>
+            <p>Currently building a Power BI implementation enabling dynamic filtering by population and campus, with institutional and program-level retention presented as separate metrics.</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">Transferability</div>
+            <p>This analytical approach mirrors churn analysis in business intelligence — applicable to SaaS customer retention, patient follow-up in healthcare, employee retention in HR, or client persistence in financial services.</p>
+          </div>
+          <p class="case-note">Visual recreated with synthetic data for portfolio purposes. Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada.</p>
         </div>
-
-        <div class="case-section">
-          <div class="case-section-title">The Result</div>
-          <p>The same underlying data, presented with the right structure, became a tool for decision-making rather than a reporting obligation. The vertical axis represents time — each row is a cohort intake. The horizontal axis tracks semester progression. The staircase effect is intentional: newer cohorts have fewer semesters of data, while older cohorts show the full retention trajectory. Stakeholders could identify programs with declining retention, compare cohorts, and segment by domestic and international students — without requiring analytical expertise.</p>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">Next Step</div>
-          <p>Currently building a Power BI implementation enabling dynamic filtering by population and campus, with institutional and program-level retention presented as separate metrics.</p>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">Transferability</div>
-          <p>This analytical approach mirrors churn analysis in business intelligence — applicable to SaaS customer retention, patient follow-up in healthcare, employee retention in HR, or client persistence in financial services.</p>
-        </div>
-
-        <p class="case-note">Visual recreated with synthetic data for portfolio purposes. Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada.</p>
       </div>
 
-      <!-- Case 2: Academic Standing Transition Matrix -->
       <div class="case-card">
-        <div class="case-tag">Visualization &amp; Dashboards · Python / Power BI</div>
-        <h3 class="case-title">Academic Standing Transition Matrix: Measuring the Real Impact of Early Alerts</h3>
-        <div class="case-section">
-          <div class="case-section-title">The Problem</div>
-          <p>Institutions implement academic alert systems but rarely have a method to measure whether those interventions actually changed student trajectories. Reports show who is at risk — but not whether the system moved them.</p>
-        </div>
-        <div class="case-section">
-          <div class="case-section-title">The Approach</div>
-          <p>Using Python, I redesigned the academic standing dataset by assigning each student two states: their standing at the start of the semester and their standing at the end. This creates a transition matrix — borrowed from data science and actuarial modeling — that makes movement between states visible and measurable.</p>
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p>The transformation also serves as a foundation for building risk indices when enriched with campus, demographic, program, and course-level parameters — enabling contextual aggregation that reduces individual identification bias.</p>
+        <div class="case-header" onclick="toggleAccordion(this)">
+          <div class="case-info">
+            <div class="case-tag">Visualization &amp; Dashboards &middot; Python / Power BI</div>
+            <h3 class="case-title">Academic Standing Transition Matrix: Measuring the Real Impact of Early Alerts</h3>
           </div>
+          <div class="case-icon">+</div>
         </div>
-        <div class="case-section">
-          <div class="case-section-title">The Visual</div>
-          <p>The heatmap shows student transitions across five academic standing states — Academic Intervention, Academic Probation 1–3, and Good Standing. Each cell represents the number of students who moved from one state (previous semester) to another (current semester). The diagonal represents students who maintained their standing. Off-diagonal cells reveal movement in both directions — recovery toward Good Standing and deterioration into deeper probation tiers.</p>
-          <div class="case-image">
-            <img src="images/academic_transition_heatmap.png" alt="Academic Standing Transition Heatmap" />
-            <div class="case-image-caption">Figure 1: Academic Standing Transition Matrix — student movement across academic standing states between semesters. Recreated with synthetic data for portfolio purposes.</div>
+        <div class="case-body">
+          <div class="case-section">
+            <div class="case-section-title">The Problem</div>
+            <p>Institutions implement academic alert systems but rarely have a method to measure whether those interventions actually changed student trajectories. Reports show who is at risk — but not whether the system moved them.</p>
           </div>
-        </div>
-                <div class="case-section">
-          <div class="case-section-title">Dataset Structure</div>
-          <p>The transformation produces a three-column dataset — ready to load directly into Power BI as a matrix table or Sankey chart:</p>
-          <div style="overflow-x:auto;margin-top:1rem;">
-            <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
-              <thead>
-                <tr>
+          <div class="case-section">
+            <div class="case-section-title">The Approach</div>
+            <p>Using Python, I redesigned the academic standing dataset by assigning each student two states: their standing at the start of the semester and their standing at the end. This creates a transition matrix — borrowed from data science and actuarial modeling — that makes movement between states visible and measurable.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content"><p>The transformation also serves as a foundation for building risk indices when enriched with campus, demographic, program, and course-level parameters — enabling contextual aggregation that reduces individual identification bias.</p></div>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">The Visual</div>
+            <p>The heatmap shows student transitions across five academic standing states — Academic Intervention, Academic Probation 1-3, and Good Standing. Each cell represents the number of students who moved from one state (previous semester) to another (current semester). The diagonal represents students who maintained their standing. Off-diagonal cells reveal movement in both directions.</p>
+            <div class="case-image"><img src="images/academic_transition_heatmap.png" alt="Academic Standing Transition Heatmap"/><div class="case-image-caption">Figure 1: Academic Standing Transition Matrix. Recreated with synthetic data for portfolio purposes.</div></div>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">Dataset Structure</div>
+            <p>The transformation produces a three-column dataset — ready to load directly into Power BI as a matrix table or Sankey chart:</p>
+            <div style="overflow-x:auto;margin-top:1rem;">
+              <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+                <thead><tr>
                   <th style="text-align:left;padding:0.6rem 1rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);">Previous_Standing</th>
                   <th style="text-align:left;padding:0.6rem 1rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);">Current_Standing</th>
                   <th style="text-align:right;padding:0.6rem 1rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);">Student_Count</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom:1px solid var(--border);">
-                  <td style="padding:0.5rem 1rem;color:var(--muted);">Academic Intervention</td>
-                  <td style="padding:0.5rem 1rem;color:var(--muted);">Academic Intervention</td>
-                  <td style="padding:0.5rem 1rem;color:var(--muted);text-align:right;">31</td>
-                </tr>
-                <tr style="border-bottom:1px solid var(--border);">
-                  <td style="padding:0.5rem 1rem;color:var(--muted);">Academic Intervention</td>
-                  <td style="padding:0.5rem 1rem;color:var(--muted);">Academic Probation 1</td>
-                  <td style="padding:0.5rem 1rem;color:var(--muted);text-align:right;">14</td>
-                </tr>
-                <tr style="border-bottom:1px solid var(--border);">
-                  <td style="padding:0.5rem 1rem;color:var(--muted);">Academic Intervention</td>
-                  <td style="padding:0.5rem 1rem;color:var(--muted);">Academic Probation 2</td>
-                  <td style="padding:0.5rem 1rem;color:var(--muted);text-align:right;">3</td>
-                </tr>
-                <tr style="border-bottom:1px solid var(--border);">
-                  <td style="padding:0.5rem 1rem;color:var(--muted);">...</td>
-                  <td style="padding:0.5rem 1rem;color:var(--muted);">...</td>
-                  <td style="padding:0.5rem 1rem;color:var(--muted);text-align:right;">...</td>
-                </tr>
-                <tr>
-                  <td style="padding:0.5rem 1rem;color:var(--text);font-weight:400;">Good Standing</td>
-                  <td style="padding:0.5rem 1rem;color:var(--text);font-weight:400;">Good Standing</td>
-                  <td style="padding:0.5rem 1rem;color:var(--gold);font-weight:400;text-align:right;">1,985</td>
-                </tr>
-              </tbody>
-            </table>
+                </tr></thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.5rem 1rem;color:var(--muted);">Academic Intervention</td><td style="padding:0.5rem 1rem;color:var(--muted);">Academic Intervention</td><td style="padding:0.5rem 1rem;color:var(--muted);text-align:right;">31</td></tr>
+                  <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.5rem 1rem;color:var(--muted);">Academic Intervention</td><td style="padding:0.5rem 1rem;color:var(--muted);">Academic Probation 1</td><td style="padding:0.5rem 1rem;color:var(--muted);text-align:right;">14</td></tr>
+                  <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.5rem 1rem;color:var(--muted);">Academic Intervention</td><td style="padding:0.5rem 1rem;color:var(--muted);">Academic Probation 2</td><td style="padding:0.5rem 1rem;color:var(--muted);text-align:right;">3</td></tr>
+                  <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.5rem 1rem;color:var(--muted);">...</td><td style="padding:0.5rem 1rem;color:var(--muted);">...</td><td style="padding:0.5rem 1rem;color:var(--muted);text-align:right;">...</td></tr>
+                  <tr><td style="padding:0.5rem 1rem;color:var(--text);font-weight:400;">Good Standing</td><td style="padding:0.5rem 1rem;color:var(--text);font-weight:400;">Good Standing</td><td style="padding:0.5rem 1rem;color:var(--gold);font-weight:400;text-align:right;">1,985</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--muted);font-style:italic;">Sample structure — synthetic data for illustration purposes.</p>
           </div>
-          <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--muted);font-style:italic;">Sample structure — synthetic data for illustration purposes.</p>
+          <div class="case-section">
+            <div class="case-section-title">Longitudinal Potential &amp; Bias Reduction</div>
+            <p>Applying the same transformation consistently across academic periods generates historical metrics — enabling the institution to track whether recovery rates are improving and whether interventions actually shifted trajectories over time.</p>
+            <p style="margin-top:0.6rem;">When results are aggregated by context — program, campus, semester, or demographic group — rather than at the individual level, the matrix reduces identification bias. Risk becomes a property of the learning environment, not a label assigned to the student. This allows institutions to ask a fundamentally different question: not <em>which students are failing</em>, but <em>under which conditions does failure concentrate</em>.</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">Next Step</div>
+            <p>This dataset structure feeds directly into Power BI as a matrix table or Sankey chart, enabling dynamic filtering by campus, program, demographics, and semester — transforming a Python analytical output into an executive dashboard.</p>
+          </div>
+          <p class="case-note">Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada. Recreated with synthetic data for portfolio purposes.</p>
         </div>
-<div class="case-section">
-          <div class="case-section-title">Longitudinal Potential &amp; Bias Reduction</div>
-          <p>Applying the same transformation consistently across academic periods generates historical metrics — enabling the institution to track whether recovery rates are improving and whether interventions actually shifted trajectories over time.</p>
-          <p style="margin-top:0.6rem;">When results are aggregated by context — program, campus, semester, or demographic group — rather than at the individual level, the matrix reduces identification bias. Risk becomes a property of the learning environment, not a label assigned to the student. This allows institutions to ask a fundamentally different question: not <em>which students are failing</em>, but <em>under which conditions does failure concentrate</em>.</p>
-        </div>
-        <div class="case-section">
-          <div class="case-section-title">Next Step</div>
-          <p>This dataset structure feeds directly into Power BI as a matrix table or Sankey chart, enabling dynamic filtering by campus, program, demographics, and semester — transforming a Python analytical output into an executive dashboard.</p>
-        </div>
-        <p class="case-note">Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada. Recreated with synthetic data for portfolio purposes.</p>
       </div>
-
     </div>
 
     <!-- PANEL: Education Domain -->
     <div id="panel-education" class="project-panel">
       <div class="case-card">
-        <div class="case-tag">Education Domain · Research Pilot</div>
-        <h3 class="case-title">EWS Pilot: Multilevel Contextual EWS – A Business Intelligence Approach</h3>
-
-        <div class="case-section">
-          <div class="case-section-title">Definition</div>
-          <p>The proposed Early Warning System (EWS) is a next-generation Academic Analytics framework that shifts the institutional focus from individual student remediation to a relational, multilevel intelligence model. It integrates a robust BI architecture with longitudinal data analysis to identify risk not as an isolated student trait, but as a dynamic interaction between the learner, the curriculum, and the institution.</p>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">The Problem</div>
-          <p>Within Ontario's higher education landscape, institutional data is often trapped in functional silos — preventing a holistic view of the factors driving student attrition. Traditional EWS implementations focus exclusively on the individual student (Micro level), treating academic risk as a learner deficiency while ignoring structural failures within specific subjects or teaching methods.</p>
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p>By focusing only on the Micro level, institutions naturalize systemic problems — failing to recognize when a student's struggle is a symptom of broader issues like "critical subjects" with high failure rates. They also depend on static entry data (e.g., high school GPA), which research confirms has modest predictive utility that fades quickly after the first semester.</p>
+        <div class="case-header" onclick="toggleAccordion(this)">
+          <div class="case-info">
+            <div class="case-tag">Education Domain &middot; Research Pilot</div>
+            <h3 class="case-title">EWS Pilot: Multilevel Contextual EWS &ndash; A Business Intelligence Approach</h3>
           </div>
+          <div class="case-icon">+</div>
         </div>
-
-        <div class="case-section">
-          <div class="case-section-title">The Architecture</div>
-          <p>The system uses an ETL process to consolidate data from institutional warehouses into a specialized Educational Data Mart, segmented into multidimensional domains — partial grades, enrollment trends, and teaching competencies — enabling real-time visual analytics.</p>
-
-          <div class="case-image">
-            <img src="images/EWS_Diagram.png" alt="EWS Data Architecture and Analytics Layer" />
-            <div class="case-image-caption">Figure 1: EWS Data Architecture &amp; Analytics Layer — from institutional databases through ETL to Risk Index Generation and Early Alert coordination.</div>
+        <div class="case-body">
+          <div class="case-section">
+            <div class="case-section-title">Definition</div>
+            <p>The proposed Early Warning System (EWS) is a next-generation Academic Analytics framework that shifts the institutional focus from individual student remediation to a relational, multilevel intelligence model. It integrates a robust BI architecture with longitudinal data analysis to identify risk not as an isolated student trait, but as a dynamic interaction between the learner, the curriculum, and the institution.</p>
           </div>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">The Three Tiers of Action</div>
-          <p>Following validated international frameworks, the EWS organizes intelligence and intervention into three nested levels — Micro, Meso, and Macro — each addressing a different layer of institutional responsibility.</p>
-
-          <div class="case-image">
-            <img src="images/Level_of_EWS.png" alt="Levels of the EWS: Micro, Meso, Macro" />
-            <div class="case-image-caption">Figure 2: EWS Levels of Information — Micro (student risk), Meso (teaching environment), and Macro (institutional outcomes).</div>
+          <div class="case-section">
+            <div class="case-section-title">The Problem</div>
+            <p>Within Ontario higher education, institutional data is often trapped in functional silos — preventing a holistic view of the factors driving student attrition. Traditional EWS implementations focus exclusively on the individual student (Micro level), treating academic risk as a learner deficiency while ignoring structural failures within specific subjects or teaching methods.</p>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content"><p>By focusing only on the Micro level, institutions naturalize systemic problems — failing to recognize when a student's struggle is a symptom of broader issues like critical subjects with high failure rates. They also depend on static entry data (e.g., high school GPA), which research confirms has modest predictive utility that fades quickly after the first semester.</p></div>
           </div>
-
-          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
-          <div class="read-more-content">
-            <p><strong style="color:var(--text);">Tier 1 – Micro:</strong> Monitors the student's academic vital signs in real-time — Trajectory Risk (historical deviation from program median) and Contingent Risk (current semester performance). First-semester credits earned serve as the most powerful milestone predictor.</p>
-            <p style="margin-top:0.6rem;"><strong style="color:var(--text);">Tier 2 – Meso:</strong> Focuses on the teaching environment. Identifies critical subjects that block student progression and monitors teaching performance indicators to adjust classroom effectiveness.</p>
-            <p style="margin-top:0.6rem;"><strong style="color:var(--text);">Tier 3 – Macro:</strong> Analyzes global barometers — retention trends, effective graduation rates — compared against external benchmarks such as the OECD average.</p>
+          <div class="case-section">
+            <div class="case-section-title">The Architecture</div>
+            <p>The system uses an ETL process to consolidate data from institutional warehouses into a specialized Educational Data Mart, segmented into multidimensional domains — partial grades, enrollment trends, and teaching competencies — enabling real-time visual analytics.</p>
+            <div class="case-image"><img src="images/EWS_Diagram.png" alt="EWS Data Architecture"/><div class="case-image-caption">Figure 1: EWS Data Architecture &amp; Analytics Layer — from institutional databases through ETL to Risk Index Generation and Early Alert coordination.</div></div>
           </div>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">Analysis Sessions</div>
-          <p>The EWS operates through four structured analysis sessions across the academic year — each with a defined purpose, suggested date, and coordinated actions across academic and support teams.</p>
-
-          <div class="case-image">
-            <img src="images/Analysis_Sessions.png" alt="EWS Analysis Sessions" />
-            <div class="case-image-caption">Figure 3: EWS Analysis Sessions — Monitoring, Tracking, Results Analysis, and Teaching Performance Review.</div>
+          <div class="case-section">
+            <div class="case-section-title">The Three Tiers of Action</div>
+            <p>Following validated international frameworks, the EWS organizes intelligence and intervention into three nested levels — Micro, Meso, and Macro — each addressing a different layer of institutional responsibility.</p>
+            <div class="case-image"><img src="images/Level_of_EWS.png" alt="EWS Levels"/><div class="case-image-caption">Figure 2: EWS Levels of Information — Micro (student risk), Meso (teaching environment), and Macro (institutional outcomes).</div></div>
+            <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+            <div class="read-more-content">
+              <p><strong style="color:var(--text);">Tier 1 - Micro:</strong> Monitors the student's academic vital signs in real-time — Trajectory Risk and Contingent Risk. First-semester credits earned serve as the most powerful milestone predictor.</p>
+              <p style="margin-top:0.6rem;"><strong style="color:var(--text);">Tier 2 - Meso:</strong> Identifies critical subjects that block student progression and monitors teaching performance indicators.</p>
+              <p style="margin-top:0.6rem;"><strong style="color:var(--text);">Tier 3 - Macro:</strong> Analyzes retention trends and effective graduation rates compared against external benchmarks such as the OECD average.</p>
+            </div>
           </div>
+          <div class="case-section">
+            <div class="case-section-title">Analysis Sessions</div>
+            <p>The EWS operates through four structured analysis sessions across the academic year — each with a defined purpose, suggested date, and coordinated actions across academic and support teams.</p>
+            <div class="case-image"><img src="images/Analysis_Sessions.png" alt="EWS Analysis Sessions"/><div class="case-image-caption">Figure 3: EWS Analysis Sessions — Monitoring, Tracking, Results Analysis, and Teaching Performance Review.</div></div>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">Expected Outcome</div>
+            <p>This framework transforms the EWS into a tool for Educational Justice. Instead of merely identifying students who have already failed, the institution assumes responsibility for optimizing the learning environment — identifying systemic barriers before they lead to student departure.</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-title">Research Foundation</div>
+            <p>The multilevel nested analytics approach is validated by research from the Politecnico di Milano, acknowledging that a student's probability of dropping out is highly conditional on their specific program. Additional frameworks draw on UCSC-Chile's multilevel model and Purdue University's Course Signals risk predictor research.</p>
+          </div>
+          <p class="case-note">Independently developed proposal based on validated research. Not institutionally adopted — the initiative and design represent original analytical work developed within an institutional reporting role at a post-secondary institution in Canada.</p>
         </div>
-
-        <div class="case-section">
-          <div class="case-section-title">Expected Outcome</div>
-          <p>This framework transforms the EWS into a tool for Educational Justice. Instead of merely identifying students who have already failed, the institution assumes responsibility for optimizing the learning environment — identifying systemic barriers before they lead to student departure.</p>
-        </div>
-
-        <div class="case-section">
-          <div class="case-section-title">Research Foundation</div>
-          <p>The multilevel nested analytics approach is validated by research from the Politecnico di Milano, acknowledging that a student's probability of dropping out is highly conditional on their specific program. Additional frameworks draw on UCSC-Chile's multilevel model and Purdue University's Course Signals risk predictor research.</p>
-        </div>
-
-        <p class="case-note">Independently developed proposal based on validated research. Not institutionally adopted — the initiative and design represent original analytical work developed within an institutional reporting role at a post-secondary institution in Canada.</p>
       </div>
     </div>
-
   </section>
 
-  <!-- CONTACT -->
   <section id="contact" style="border-top:1px solid var(--border);">
     <p class="section-label">Contact</p>
     <h2 class="section-title">Get in Touch</h2>
     <div class="section-divider"></div>
     <p style="color:var(--muted);max-width:480px;margin-bottom:2rem;">Open to opportunities in data analytics, business intelligence, and institutional research across Canada.</p>
     <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-      <a href="/cdn-cgi/l/email-protection#e9889b848887dbc79b80989c8c85848ca98e84888085c78a8684" class="btn-outline"><span class="__cf_email__" data-cfemail="7011021d111e425e02190105151c1d1530171d11191c5e131f1d">[email&#160;protected]</span></a>
+      <a href="mailto:arman2.riquelme@gmail.com" class="btn-outline">arman2.riquelme@gmail.com</a>
       <a href="https://linkedin.com/in/jorge-riquelme-data" target="_blank" class="btn-outline">LinkedIn</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <span class="footer-name">Jorge Riquelme</span>
     <div class="footer-links">
       <a href="https://github.com/arman2riquelme" target="_blank">GitHub</a>
       <a href="https://linkedin.com/in/jorge-riquelme-data" target="_blank">LinkedIn</a>
     </div>
-    <p class="footer-copy">© 2026 Jorge Riquelme · Data Analyst · Canada</p>
+    <p class="footer-copy">&copy; 2026 Jorge Riquelme &middot; Data Analyst &middot; Canada</p>
   </footer>
 
   <script>
-    // Category navigation
-    function showCategory(cat) {
-      document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.project-panel').forEach(p => p.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-      document.getElementById('panel-' + cat).classList.add('active');
+    function showCategory(cat, el) {
+      document.querySelectorAll(".category-card").forEach(c => c.classList.remove("active"));
+      document.querySelectorAll(".project-panel").forEach(p => p.classList.remove("active"));
+      el.classList.add("active");
+      document.getElementById("panel-" + cat).classList.add("active");
     }
-
-    // Read more toggle
+    function toggleAccordion(header) {
+      const card = header.parentElement;
+      const isOpen = card.classList.contains("open");
+      card.classList.toggle("open");
+      header.querySelector(".case-icon").textContent = isOpen ? "+" : "\u2212";
+    }
     function toggleReadMore(btn) {
       const content = btn.nextElementSibling;
-      const isOpen = content.style.display === 'block';
-      content.style.display = isOpen ? 'none' : 'block';
-      btn.textContent = isOpen ? '+ Read more' : '− Read less';
+      const isOpen = content.style.display === "block";
+      content.style.display = isOpen ? "none" : "block";
+      btn.textContent = isOpen ? "+ Read more" : "\u2212 Read less";
     }
   </script>
+</body>
+</html>

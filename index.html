@@ -721,6 +721,112 @@
         <p class="case-note">Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada. Recreated with synthetic data for portfolio purposes.</p>
       </div>
 
+
+      <!-- Case: Retention Dataset Audit & ETL Transformation -->
+      <div class="case-card">
+        <div class="case-tag">Data Analysis &amp; Auditing · Python</div>
+        <h3 class="case-title">Retention Dataset Audit &amp; ETL Transformation: From Wide Format to BI-Ready Structure</h3>
+        <div class="case-section">
+          <div class="case-section-title">The Audit</div>
+          <p>Wide-format datasets are the standard output of legacy administrative systems — efficient for storage and transactional reporting, but structurally limited for dynamic BI analysis. This case documents the audit and transformation of a retention dataset typical of Ontario post-secondary institutions: 985 rows and 33 columns, where semester-retention values are embedded directly in column names rather than stored as rows.</p>
+          <button class="read-more-btn" onclick="toggleReadMore(this)">+ Read more</button>
+          <div class="read-more-content">
+            <p>The audit process began by mapping the dataset's composition: five descriptive columns (academic year, cohort term, program, campus, ministry codes) followed by 18 retention columns encoding both the semester number (1–6) and student type (Total, Domestic, International) within the column name itself. This wide structure, while readable as a static report, prevents dynamic filtering by semester or student type without creating individual measures for each column.</p>
+          </div>
+        </div>
+        <div class="case-section">
+          <div class="case-section-title">Dataset Structure — Original Format</div>
+          <p>Wide-format structure where each semester and student type occupies a separate column — 18 retention columns embedded in column names, making dynamic slicing in Power BI impractical without individual measures for each:</p>
+          <div style="overflow-x:auto;margin-top:1rem;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+              <thead>
+                <tr>
+                  <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">academic_year</th>
+                  <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">cohort_term</th>
+                  <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">program_name</th>
+                  <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">campus</th>
+                  <th style="text-align:right;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">sem1_retained_total</th>
+                  <th style="text-align:right;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">sem1_retained_domestic</th>
+                  <th style="text-align:center;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--muted);font-weight:400;border-bottom:1px solid var(--gold-soft);">…</th>
+                  <th style="text-align:right;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">sem6_retained_international</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);">2026</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);">202508</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);">[Program]</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);">Campus A</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:right;">26</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:right;">26</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:center;">…</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);border-bottom:1px solid var(--border);text-align:right;">0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:0.6rem;font-size:0.78rem;color:var(--muted);font-style:italic;">985 rows × 33 columns — 18 of which are semester-retention values embedded in column names (SEM1–SEM6 × Total / DOM / INT)</p>
+        </div>
+        <div class="case-section">
+          <div class="case-section-title">The Transformation</div>
+          <p>Using Python, the dataset was unpivoted from wide to long format — extracting the semester number from column names into a dedicated field. The result reduces 33 columns to 6, making the data natively compatible with Power BI slicers and DAX measures. Demographic dimensions are added separately via foreign key joins, enabling richer disaggregation without embedding them in the base structure:</p>
+          <div style="overflow-x:auto;margin-top:1rem;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+              <thead>
+                <tr>
+                  <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">academic_year</th>
+                  <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">cohort_term</th>
+                  <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">program_name</th>
+                  <th style="text-align:left;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">campus</th>
+                  <th style="text-align:center;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">semester</th>
+                  <th style="text-align:right;padding:0.6rem 0.8rem;background:#2a2d32;color:var(--gold);font-weight:600;border-bottom:1px solid var(--gold-soft);white-space:nowrap;">students</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">2026</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">202508</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">[Program]</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">Campus A</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">1</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">26</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">2026</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">202508</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">[Program]</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">Campus B</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">2</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">0</td>
+                </tr>
+                <tr>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">…</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">…</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">…</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);">…</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:center;">…</td>
+                  <td style="padding:0.5rem 0.8rem;color:var(--muted);text-align:right;">…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:0.6rem;font-size:0.78rem;color:var(--muted);font-style:italic;">Long format — one row per program, campus, and semester. What previously required 18 static measures becomes a single Students field.</p>
+        </div>
+        <div class="case-section">
+          <div class="case-section-title">Second Transformation — Adding Dimensions</div>
+          <p>A foreign key was constructed to enable joins with dimension tables — adding demographic, program, and enrollment context without embedding it in the base retention structure. This separation of concerns keeps the retention layer clean and scalable as additional data sources are connected.</p>
+        </div>
+        <div class="case-section">
+          <div class="case-section-title">A Note on Cohort Tracking</div>
+          <p>Institutional enrollment data is typically aggregated at the program-cohort level, not at the individual student level. To support cohort tracking across semesters, the dataset was restructured using enrollment data as the foundation — making it possible to distinguish organic retention from other enrollment movements that aggregate reporting does not capture by default. Cohort-level program tracking is developed further in Case 2.</p>
+        </div>
+        <div class="case-section">
+          <div class="case-section-title">The Result</div>
+          <p>A long-format structure ready to calculate institutional and program-level retention rates dynamically — with a foundation that scales to include additional dimensions as data sources are connected via foreign keys. What previously required 18 static measures becomes a single analytical layer adaptable to any reporting need.</p>
+        </div>
+        <p class="case-note">Analysis developed independently within an institutional reporting role at a post-secondary institution in Canada. Dataset structure illustrated with synthetic data for portfolio purposes.</p>
+      </div>
+
     </div>
 
     <!-- PANEL: Visualization & Dashboards -->
